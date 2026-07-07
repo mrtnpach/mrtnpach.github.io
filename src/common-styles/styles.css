@@ -1,7 +1,8 @@
 :root {
     --clr-dark: oklch(14.7% 0.004 49.25);
     /* --clr-light: oklch(70.9% 0.01 56.259); */
-    --clr-light: antiquewhite;
+    /* --clr-light: antiquewhite; */
+    --clr-light: oklch(98.5% 0.001 106.423);
     --clr-blue: oklch(13% 0.028 261.692);
     --clr-rose: oklch(27.1% 0.105 12.094);
     --clr-emerald: oklch(26.2% 0.051 172.552);
@@ -65,6 +66,14 @@ strong {
 hr {
     margin-bottom: 1rem;
     margin-top: 0.25rem;
+}
+
+ul {
+    font-size: var(--size-base);
+}
+
+section p strong {
+    color: var(--clr-rose);
 }
 
 /* m */

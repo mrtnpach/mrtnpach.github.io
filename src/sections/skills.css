@@ -1,0 +1,32 @@
+.skills-image {
+    width: 10rem;
+    height: auto;
+    margin-top: 2rem;
+}
+
+.skill-list{
+    max-width: 50ch;
+}
+
+.column-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: column;
+    /* gap: 10rem */
+}
+
+/* l */
+@media(min-width: 1024px){
+    .skills-image {
+        margin-top: 0rem;
+    }
+
+    .column-container {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

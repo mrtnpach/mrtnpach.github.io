@@ -1,0 +1,11 @@
+.bullet-heading {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.heading-icon {
+    height: 0.6em;
+    width: auto;
+}

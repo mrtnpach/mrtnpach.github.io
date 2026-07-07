@@ -1,0 +1,33 @@
+.icon-button {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border: 2px outset lightgray;
+    border-radius: 3px;
+    background-color: lightgray;
+
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
+.icon-button:active {
+    border: 2px inset lightgray;
+}
+
+.icon-button:focus {
+    outline: none;
+}
+
+.icon-button__image {
+    height: calc(2*var(--size-base));
+    width: auto;
+}
+
+.icon-button__text {
+    font-size: var(--size-base);
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}

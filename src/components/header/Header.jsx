@@ -1,8 +1,10 @@
 import './header.css';
 
+import ButtonLink from '../button-link/ButtonLink';
+
 import growingTree from '../../assets/images/growing_tree.gif';
 import shakespeareIcon from '../../assets/icons/shkspere.gif';
-import mailIcon from '../../assets/icons/mail4.gif';
+import docIcon from '../../assets/icons/tech_doc.gif';
 import codeIcon from '../../assets/icons/codebtn.gif';
 import commentsIcon from '../../assets/icons/comments.gif';
 
@@ -24,26 +26,28 @@ function Menu(){
             <nav>
                 <ul className='header__menu'>
                     <li>
-                        <a href='#about'>
-                            <IconButton icon={shakespeareIcon}>
-                                About
-                            </IconButton>
-                        </a>
+                        <ButtonLink icon={shakespeareIcon} href={'#about'}>
+                            About
+                        </ButtonLink>
                     </li>
                     <li>
-                        <IconButton icon={codeIcon}>
+                        <ButtonLink icon={commentsIcon} href={'#skills'}>
+                            Skills
+                        </ButtonLink>
+                    </li>
+                    <li>
+                        <ButtonLink icon={codeIcon} href={'#experience'}>
                             Experience
-                        </IconButton>
+                        </ButtonLink>
                     </li>
                     <li>
-                        <IconButton icon={mailIcon}>
-                            Contact
-                        </IconButton>
-                    </li>
-                    <li>
-                        <IconButton icon={commentsIcon}>
+                        <ButtonLink 
+                            icon={docIcon} 
+                            href={'../../public/Martin_Pacheco_CV.pdf'}
+                            inNewTab={true}
+                        >
                             Resume
-                        </IconButton>
+                        </ButtonLink>
                     </li>
                 </ul>
             </nav>
@@ -51,15 +55,5 @@ function Menu(){
     );
 }
 
-function IconButton({icon, children}) {
-    return (
-        <button className='icon-button'>
-            <img src={icon} className='icon-button__image'/>
-            <p className='icon-button__text'>
-                {children}
-            </p>
-        </button>
-    );
-}
 
 export default Header;

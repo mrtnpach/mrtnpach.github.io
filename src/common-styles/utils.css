@@ -48,18 +48,52 @@
     text-shadow: 2px 2px 15px black;
     border: 2px inset;
     background-image: url('../assets/backgrounds/clovers.gif');
+    padding: 1rem;
 }
 
 .texture-subsection {
     color: var(--clr-light);
     border: 2px inset;
-    background-image: url('../assets/backgrounds/texture.jpg');
+    background-image: url('../assets/backgrounds/texture_section.gif');
+    padding: 1rem;
 }
 
 .blue-subsection {
     color: var(--clr-light);
     border: 2px inset;
     background-image: url('../assets/backgrounds/blue.jpg');
+    padding: 1rem;
+}
+
+.red-subsection {
+    color: var(--clr-light);
+    border: 2px inset;
+    background-image: url('../assets/backgrounds/red.jpg');
+    padding: 1rem;
+}
+
+.p-dark-red {
+    color: var(--clr-dark);
+
+    strong {
+        color: var(--clr-rose)
+    }
+}
+
+.p-dark-emerald {
+    color: var(--clr-dark);
+
+    strong {
+        color: var(--clr-emerald)
+    }
+}
+
+.centered-image {
+    margin: 0 auto;
+}
+
+.spotify-player {
+    width: 90%;
 }
 
 /* xs */

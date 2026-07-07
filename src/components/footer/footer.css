@@ -5,6 +5,7 @@
     justify-content: space-between;
 }
 
-.footer__container {
-    
+.footer__blinky{
+    height: var(--size-3xl);
+    width: auto;
 }

@@ -1,9 +1,5 @@
 .about {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+
 }
 
 .about__portrait {
@@ -14,7 +10,9 @@
 
 .about__title {
     line-height: 0.9;
-    color: var(--clr-emerald-light);
+    margin-bottom: 1rem;
+    color: oklch(59.6% 0.145 163.225);
+    /* color: oklch(50.8% 0.118 165.612); */
 }
 
 .about__container {
@@ -23,6 +21,7 @@
     gap: 1em;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .about__image{

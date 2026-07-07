@@ -10,6 +10,7 @@
 
 .header h1 {
     font-size: var(--size-3xl);
+    color: var(--clr-light);
 }
 
 .header__image {
@@ -31,31 +32,6 @@
 
 .header__menu .icon-button {
     justify-self: stretch;
-}
-
-.icon-button {
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0;
-    border: 2px outset;
-    border-radius: 3px;
-}
-
-.icon-button:active {
-    border: 2px inset;
-}
-
-.icon-button__image {
-    height: calc(2*var(--size-base));
-    width: auto;
-}
-
-.icon-button__text {
-    font-size: var(--size-base);
-    margin-left: 0.5em;
-    margin-right: 0.5em;
 }
 
 @media(min-width: 768px){
