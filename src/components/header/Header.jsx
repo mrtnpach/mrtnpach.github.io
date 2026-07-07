@@ -20,6 +20,7 @@ function Header() {
     );
 }
 
+// MOVE MENU AND MAKE DYNAMIC!
 function Menu(){
     return(
         <div className='menu container'>

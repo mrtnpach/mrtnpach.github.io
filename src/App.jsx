@@ -25,6 +25,9 @@ function App() {
         <Experience></Experience>
       </main>
       <Footer></Footer>
+      <div className='persistent-bottom'>
+        This site is under construction...
+      </div>
     </>
   )
 }

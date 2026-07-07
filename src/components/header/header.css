@@ -5,7 +5,8 @@
     gap: 0.5em;
     align-items: center;
     color: antiquewhite;
-    background-color: var(--clr-rose);
+    /* background-color: var(--clr-rose); */
+    background-image: url('../../assets/backgrounds/brown.jpg');
 }
 
 .header h1 {
