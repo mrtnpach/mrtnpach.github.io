@@ -3,30 +3,52 @@
 // out -> varying -> in -> varying
 
 const vertexShaderSource = `
-    attribute vec4 vertexPosition;
-    attribute vec3 vertexColor;
+    attribute vec4 aVertexPosition;
+    attribute vec3 aVertexNormal;
+    attribute vec3 aVertexColor;
 
-    varying vec3 fragVertexColor;
+    varying vec3 vVertexColor;
+    varying vec3 vNormalVector;
+    // varying vec3 vFragmentPositionWS;
 
-    uniform mat4 modelMatrix;
-    uniform mat4 viewMatrix;
-    uniform mat4 projectionMatrix;
+    uniform mat4 uModelMatrix;
+    uniform mat4 uViewMatrix;
+    uniform mat4 uProjectionMatrix;
+
 
     void main()
     {
-        fragVertexColor = vertexColor;
-        gl_Position = projectionMatrix * viewMatrix * modelMatrix * vertexPosition;
+        vVertexColor = aVertexColor;
+        // vFragmentPositionWS = vec3(uModelMatrix * aVertexPosition);
+        
+        // Inverse op not compatible. Using uniform transforms so I'll ommit it
+        vNormalVector = mat3(uModelMatrix) * aVertexNormal;
+        
+        gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * aVertexPosition;
     }
 `;
 
 const fragmentShaderSource = `
-    precision mediump float;    
-    varying vec3 fragVertexColor;
+    varying highp vec3 vVertexColor;
+    varying highp vec3 vNormalVector;
+    // varying vec3 vFragmentPositionWS;
 
     void main()
     {
-        gl_FragColor = vec4(fragVertexColor, 1.0);
-        //gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+        highp vec3 normal = normalize(vNormalVector);
+
+        highp vec3 ambientColor = vec3(0.6, 0.6, 0.6);
+        highp vec3 directionalColor = vec3(1, 0.714, 0);
+        highp vec3 lightDirection = normalize(-vec3(-0.7, 0.0, 0.8));
+
+        highp float directionalFactor = max(dot(normal, lightDirection), 0.0);
+        
+        highp vec3 ambientResult = ambientColor * vVertexColor;
+        highp vec3 directionalResult = directionalFactor * directionalColor * vVertexColor;
+        highp vec3 diffuse = ambientResult + directionalResult;
+
+        gl_FragColor = vec4(diffuse, 1.0);
+        // gl_FragColor = vec4(directionalResult, 1.0);
     }
 `;
 

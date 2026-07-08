@@ -18,52 +18,107 @@ function Render(canvas) {
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
 
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertexShader, vertexShaderSource);
+    gl.compileShader(vertexShader);
+
+    // if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+    //     console.log(
+    //     `An error occurred compiling the shaders: ${gl.getShaderInfoLog(vertexShader)}`,
+    //     );
+    //     gl.deleteShader(vertexShader);
+    //     return null;
+    // }
+
+    // Compilation will succeed. I believe!
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragmentShader, fragmentShaderSource);
+    gl.compileShader(fragmentShader);
+
+    // if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+    //     console.log(
+    //     `An error occurred compiling frag shaders: ${gl.getShaderInfoLog(fragmentShader)}`,
+    //     );
+    //     gl.deleteShader(fragmentShader);
+    //     return null;
+    // }
+
+    const shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        console.log(
+        `Unable to initialize the shader program: ${gl.getProgramInfoLog(
+            shaderProgram,
+        )}`
+        );
+        return null;
+    }
+
+    // I still believe!
+    gl.useProgram(shaderProgram);
+
     const vertices = new Float32Array([
-        // Front face
-        -1.0, -1.0, 1.0, 
-        1.0, -1.0, 1.0, 
-        1.0, 1.0, 1.0, 
-        -1.0, 1.0, 1.0,
+        // Front face       Normals
+        -1.0, -1.0, 1.0,    0.0, 0.0, 1.0,
+        1.0, -1.0, 1.0,     0.0, 0.0, 1.0,
+        1.0, 1.0, 1.0,      0.0, 0.0, 1.0,
+        -1.0, 1.0, 1.0,     0.0, 0.0, 1.0,
         // Back face
-        -1.0, -1.0, -1.0, 
-        -1.0, 1.0, -1.0, 
-        1.0, 1.0, -1.0, 
-        1.0, -1.0, -1.0,
+        -1.0, -1.0, -1.0,   0.0, 0.0, -1.0,
+        -1.0, 1.0, -1.0,    0.0, 0.0, -1.0,
+        1.0, 1.0, -1.0,     0.0, 0.0, -1.0,
+        1.0, -1.0, -1.0,    0.0, 0.0, -1.0,
         // Top face
-        -1.0, 1.0, -1.0, 
-        -1.0, 1.0, 1.0, 
-        1.0, 1.0, 1.0, 
-        1.0, 1.0, -1.0,
+        -1.0, 1.0, -1.0,    0.0, 1.0, 0.0,
+        -1.0, 1.0, 1.0,     0.0, 1.0, 0.0,
+        1.0, 1.0, 1.0,      0.0, 1.0, 0.0,
+        1.0, 1.0, -1.0,     0.0, 1.0, 0.0,
         // Bottom face
-        -1.0, -1.0, -1.0, 
-        1.0, -1.0, -1.0, 
-        1.0, -1.0, 1.0, 
-        -1.0, -1.0, 1.0,
+        -1.0, -1.0, -1.0,   0.0, -1.0, 0.0,
+        1.0, -1.0, -1.0,    0.0, -1.0, 0.0,
+        1.0, -1.0, 1.0,     0.0, -1.0, 0.0,
+        -1.0, -1.0, 1.0,    0.0, -1.0, 0.0,
         // Right face
-        1.0, -1.0, -1.0, 
-        1.0, 1.0, -1.0, 
-        1.0, 1.0, 1.0, 
-        1.0, -1.0, 1.0,
+        1.0, -1.0, -1.0,    1.0, 0.0, 0.0,
+        1.0, 1.0, -1.0,     1.0, 0.0, 0.0,
+        1.0, 1.0, 1.0,      1.0, 0.0, 0.0,
+        1.0, -1.0, 1.0,     1.0, 0.0, 0.0,
         // Left face
-        -1.0, -1.0, -1.0, 
-        -1.0, -1.0, 1.0, 
-        -1.0, 1.0, 1.0, 
-        -1.0, 1.0, -1.0,
+        -1.0, -1.0, -1.0,   -1.0, 0.0, 0.0,
+        -1.0, -1.0, 1.0,    -1.0, 0.0, 0.0,
+        -1.0, 1.0, 1.0,     -1.0, 0.0, 0.0,
+        -1.0, 1.0, -1.0,    -1.0, 0.0, 0.0
     ]);
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(
-      0, // Assume location = 0?
-      3,
-      gl.FLOAT,
-      false,
-      0,
-      0
-    );
-    gl.enableVertexAttribArray(0);
 
+    const positionLocation = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+    gl.vertexAttribPointer(
+        positionLocation, // Assume location = 0?
+        3,
+        gl.FLOAT,
+        false,
+        6 * Float32Array.BYTES_PER_ELEMENT,
+        0
+    );
+    gl.enableVertexAttribArray(positionLocation);
+    
+    const normalLocation = gl.getAttribLocation(shaderProgram, "aVertexNormal");
+    gl.vertexAttribPointer(
+        normalLocation,
+        3,
+        gl.FLOAT,
+        false,
+        6 * Float32Array.BYTES_PER_ELEMENT,
+        3 * Float32Array.BYTES_PER_ELEMENT
+    );
+    gl.enableVertexAttribArray(normalLocation);
+    
     const faceColors = [
         [0.659, 0.118, 0.047],
         [0.659, 0.118, 0.047],
@@ -72,27 +127,29 @@ function Render(canvas) {
         [0.831, 0.816, 0.035],
         [0.831, 0.816, 0.035],
     ];
-
+    
     let colors = [];
     for (const c of faceColors) 
-    {
-        colors = colors.concat(c, c, c, c);
-    }
-
-    const colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-    gl.vertexAttribPointer(
-      1, // Assume location = 1?
-      3,
-      gl.FLOAT,
-      false,
-      0,
-      0,
-    );
-    gl.enableVertexAttribArray(1);
-
-    // Use VAO later!!
+        {
+            colors = colors.concat(c, c, c, c);
+        }
+        
+        const colorBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+        
+        const colorLocation = gl.getAttribLocation(shaderProgram, "aVertexColor");
+        gl.vertexAttribPointer(
+            colorLocation, // Assume location = 2?
+            3,
+            gl.FLOAT,
+            false,
+            0,
+            0,
+        );
+        gl.enableVertexAttribArray(colorLocation);
+        
+        // Use VAO later!!
     const indices = new Uint16Array([
         0,  1,  2,      0,  2,  3,    // front
         4,  5,  6,      4,  6,  7,    // back
@@ -106,23 +163,7 @@ function Render(canvas) {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, vertexShaderSource);
-    gl.compileShader(vertexShader);
-
-    // Compilation will succeed. I believe!
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader, fragmentShaderSource);
-    gl.compileShader(fragmentShader);
-
-    const shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
-
-    // I still believe!
     
-    gl.useProgram(shaderProgram);
     const viewMatrix = mat4.create();
     mat4.lookAt(
       viewMatrix,
@@ -140,12 +181,11 @@ function Render(canvas) {
       100
     );
 
+    const modelMatLocation = gl.getUniformLocation(shaderProgram, "uModelMatrix");
+    const viewMatLocation = gl.getUniformLocation(shaderProgram, "uViewMatrix");
+    const projMatLocation = gl.getUniformLocation(shaderProgram, "uProjectionMatrix");
+    
     let prevTime = 0;
-
-    const modelMatLocation = gl.getUniformLocation(shaderProgram, "modelMatrix");
-    const viewMatLocation = gl.getUniformLocation(shaderProgram, "viewMatrix");
-    const projMatLocation = gl.getUniformLocation(shaderProgram, "projectionMatrix");
-
     function renderScene(now)
     {
         now *= 0.001;
@@ -161,8 +201,8 @@ function Render(canvas) {
         const modelMatrix = mat4.create();
         mat4.identity(modelMatrix);
         mat4.translate(modelMatrix, modelMatrix, [0.0, yPosition, 0.0]);
-        mat4.rotateY(modelMatrix, modelMatrix, rotationRadians / 180)
-        mat4.rotateX(modelMatrix, modelMatrix, rotationRadians / 180)
+        mat4.rotateY(modelMatrix, modelMatrix, rotationRadians / 180);
+        mat4.rotateX(modelMatrix, modelMatrix, rotationRadians / 180);
 
         gl.useProgram(shaderProgram);
 

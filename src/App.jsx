@@ -28,7 +28,7 @@ function App() {
         <Experience></Experience>
       </main>
       <section className='container'>
-        <WebGLCanvas></WebGLCanvas>
+        <WebGLCanvas sizePixels={256}/>
       </section>
       <Footer></Footer>
       <div className='persistent-bottom'>
@@ -38,25 +38,25 @@ function App() {
   )
 }
 
-function WebGLCanvas({canvasHeight = 128, canvasWidth = 128}) {
+function WebGLCanvas({sizePixels = 128}) {
 
   const canvasRef = useRef(null);
 
   useEffect(() => 
   {
     const canvas = canvasRef.current;
-    Render(canvas, canvasHeight, canvasWidth);
+    Render(canvas);
   }, []);
 
   return(
     <canvas
       ref={canvasRef}
-      width={canvasHeight}
-      height={canvasWidth}
+      width={sizePixels}
+      height={sizePixels}
       style={
         {
-          height: canvasHeight,
-          width: canvasWidth
+          height: sizePixels,
+          width: sizePixels
         }
       }
       className='webgl-canvas'
