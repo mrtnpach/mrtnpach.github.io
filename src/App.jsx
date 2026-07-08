@@ -38,21 +38,27 @@ function App() {
   )
 }
 
-function WebGLCanvas() {
+function WebGLCanvas({canvasHeight = 128, canvasWidth = 128}) {
 
   const canvasRef = useRef(null);
 
   useEffect(() => 
   {
     const canvas = canvasRef.current;
-    Render(canvas);
+    Render(canvas, canvasHeight, canvasWidth);
   }, []);
 
   return(
     <canvas
       ref={canvasRef}
-      width={256}
-      height={256}
+      width={canvasHeight}
+      height={canvasWidth}
+      style={
+        {
+          height: canvasHeight,
+          width: canvasWidth
+        }
+      }
       className='webgl-canvas'
     >
 
