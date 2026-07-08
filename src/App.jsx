@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import Render from './webgl/rendering';
-import { vertexShaderSource, fragmentShaderSource } from './webgl/shaders';
-import { mat4 } from 'gl-matrix';
+
 
 import './App.css';
 
@@ -10,6 +8,7 @@ import drawing from './assets/images/drawing.gif';
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import WebGLCanvas from './components/webgl-canvas/WebGLCanvas';
 
 import { IconH1, IconH2 } from './components/bullet-heading/BulletHeading';
 
@@ -27,43 +26,12 @@ function App() {
         <Skills></Skills>
         <Experience></Experience>
       </main>
-      <section className='container'>
-        <WebGLCanvas sizePixels={256}/>
-      </section>
       <Footer></Footer>
       <div className='persistent-bottom'>
         This site is under construction...
       </div>
     </>
   )
-}
-
-function WebGLCanvas({sizePixels = 128}) {
-
-  const canvasRef = useRef(null);
-
-  useEffect(() => 
-  {
-    const canvas = canvasRef.current;
-    Render(canvas);
-  }, []);
-
-  return(
-    <canvas
-      ref={canvasRef}
-      width={sizePixels}
-      height={sizePixels}
-      style={
-        {
-          height: sizePixels,
-          width: sizePixels
-        }
-      }
-      className='webgl-canvas'
-    >
-
-    </canvas>
-  );
 }
 
 export default App

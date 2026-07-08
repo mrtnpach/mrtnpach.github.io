@@ -7,7 +7,3 @@
   color: var(--clr-light);
   text-align: center;
 }
-
-.webgl-canvas {
-  border: 2px inset;
-}

@@ -6,6 +6,8 @@ import blueTri from '../assets/bullets/bl_tri.gif';
 import redTri from '../assets/bullets/rd_tri.gif';
 import purpleTri from '../assets/bullets/pr_tri.gif';
 
+import WebGLCanvas from '../components/webgl-canvas/WebGLCanvas';
+
 import skelly from '../assets/images/skelly_computer.webp';
 
 function Skills() {
@@ -51,7 +53,8 @@ function Skills() {
             that <strong>understading why they work</strong> is just as important as <strong>understanding why they fail </strong> 
             when something goes wrong. Here's a list of some of the things I've studied and experimented with:
         </p>
-          <div className='red-subsection'>
+          <div className='red-subsection other-skills'>
+            <WebGLCanvas sizePixels={180}></WebGLCanvas>
             <ul>
                 <li>
                 Operating system design and implementation
@@ -72,6 +75,7 @@ function Skills() {
                 Local area network design, Ethernet and wireless networks, Cisco equipment configuration
                 </li>
             </ul>
+            <br></br>
           </div>
         </section>
     );

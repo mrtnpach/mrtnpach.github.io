@@ -16,6 +16,11 @@
     /* gap: 10rem */
 }
 
+.other-skills {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 /* l */
 @media(min-width: 1024px){
     .skills-image {
@@ -29,4 +34,10 @@
         flex-wrap: wrap;
         gap: 1rem;
     }
+
+    .other-skills {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }   
 }

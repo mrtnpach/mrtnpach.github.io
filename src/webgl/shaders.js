@@ -37,13 +37,14 @@ const fragmentShaderSource = `
     {
         highp vec3 normal = normalize(vNormalVector);
 
-        highp vec3 ambientColor = vec3(0.6, 0.6, 0.6);
-        highp vec3 directionalColor = vec3(1, 0.714, 0);
-        highp vec3 lightDirection = normalize(-vec3(-0.7, 0.0, 0.8));
+        // highp vec3 ambientColor = vec3(0.078, 0.969, 0.682);
+        highp vec3 ambientColor = vec3(0.5, 0.5, 0.5);
+        highp vec3 directionalColor = vec3(1, 1, 1);
+        highp vec3 lightDirection = normalize(-vec3(-0.5, 0.0, 0.8));
 
         highp float directionalFactor = max(dot(normal, lightDirection), 0.0);
         
-        highp vec3 ambientResult = ambientColor * vVertexColor;
+        highp vec3 ambientResult = ambientColor * 0.5 * vVertexColor;
         highp vec3 directionalResult = directionalFactor * directionalColor * vVertexColor;
         highp vec3 diffuse = ambientResult + directionalResult;
 

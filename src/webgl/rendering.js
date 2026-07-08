@@ -13,7 +13,8 @@ function Render(canvas) {
     }
 
     gl.viewport(0.0, 0.0, canvas.width, canvas.height);
-    gl.clearColor(0.4, 0.612, 0.561, 1.0);
+    //gl.clearColor(0.008, 0.169, 0.118, 0.0);
+    gl.clearColor(0.0, 0.0, 0.0, 0.5);
     gl.clearDepth(1.0);
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
@@ -198,11 +199,14 @@ function Render(canvas) {
          // draw-scene
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+        // Determine best rotation for shows
         const modelMatrix = mat4.create();
         mat4.identity(modelMatrix);
         mat4.translate(modelMatrix, modelMatrix, [0.0, yPosition, 0.0]);
         mat4.rotateY(modelMatrix, modelMatrix, rotationRadians / 180);
-        mat4.rotateX(modelMatrix, modelMatrix, rotationRadians / 180);
+        mat4.rotateX(modelMatrix, modelMatrix, 45 * Math.PI / 180);
+        mat4.rotateZ(modelMatrix, modelMatrix, 45 * Math.PI / 180);
+        // mat4.rotateX(modelMatrix, modelMatrix, rotationRadians / 180);
 
         gl.useProgram(shaderProgram);
 
